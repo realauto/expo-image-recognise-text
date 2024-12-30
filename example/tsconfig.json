@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-image-recognise-text": ["../src/index"],
+      "expo-image-recognise-text/*": ["../src/*"]
+    }
+  }
+}

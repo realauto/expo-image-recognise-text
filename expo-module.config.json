@@ -1,0 +1,17 @@
+{
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "ExpoImageRecogniseTextModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.imagerecognisetext.ExpoImageRecogniseTextModule"
+    ]
+  }
+}
