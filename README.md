@@ -26,40 +26,42 @@ npm install expo-image-recognise-text
 ```
 
 	2.	For iOS, make sure to run:
-
+  
+```bash
 npx pod-install
-
+```
 
 	3.	Rebuild the project using Expo’s custom development client:
 
+```bash
 expo prebuild
 expo run:ios
 expo run:android
-
+```
 For Bare React Native Projects
-	1.	Install the library:
+1. Install the library:
 
 npm install expo-image-recognise-text
 
 
-	2.	Install necessary dependencies:
+2.	Install necessary dependencies:
 
 npx pod-install
 
 
-	3.	Ensure that the Expo package is installed and configured:
+3.	Ensure that the Expo package is installed and configured:
 
 npm install expo
 
 
-	4.	Build the project using your preferred tools.
+4.	Build the project using your preferred tools.
 
 Usage
 
 Here’s how to use expo-image-recognise-text in your project:
 
 Example
-```
+```javascript
 import React, { useState } from 'react';
 import { View, Button, Text } from 'react-native';
 import ExpoImageRecogniseText from 'expo-image-recognise-text';
@@ -90,17 +92,20 @@ export default App;
 
 API
 
-``` javascript
 ExpoImageRecogniseText.recognizeTextFromBase64Async(base64Image: string)
-	•	Parameters:
-	•	base64Image (string): The Base64-encoded image data. Must include the prefix, e.g., data:image/png;base64,....
-	•	Returns:
-	•	A promise that resolves to the recognized text as a string.
-	•	Example:
+ Parameters:
+   base64Image (string): The Base64-encoded image data. Must include the prefix, e.g., data:image/png;base64,....
+ Returns:
+   A promise that resolves to the recognized text as a string.
 
+
+Example:
+
+```javascript
 const text = await ExpoImageRecogniseText.recognizeTextFromBase64Async(base64Image);
 console.log('Recognized Text:', text);
 ```
+
 Contributing
 
 Contributions are welcome! Please check the contributing guide for details.
