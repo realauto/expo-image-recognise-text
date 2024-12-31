@@ -1,30 +1,21 @@
 import ExpoModulesCore
+import Vision
+import UIKit
 
 public class ExpoImageRecogniseTextModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
   public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ExpoImageRecogniseText')` in JavaScript.
     Name("ExpoImageRecogniseText")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
     Constants([
       "PI": Double.pi
     ])
 
-    // Defines event names that the module can send to JavaScript.
     Events("onChange")
 
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
     Function("hello") {
       return "Hello world! 👋"
     }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
     AsyncFunction("setValueAsync") { (value: String) in
       // Send an event to JavaScript.
       self.sendEvent("onChange", [
@@ -32,17 +23,62 @@ public class ExpoImageRecogniseTextModule: Module {
       ])
     }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(ExpoImageRecogniseTextView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: ExpoImageRecogniseTextView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
-        }
+    // No default argument in the closure. We can handle it manually in the body.
+    AsyncFunction("recognizeTextFromBase64Async") { (base64Image: String, language: String?) -> String in
+      // 1. Provide a fallback language if user doesn’t pass any language param
+      let chosenLanguage = (language?.isEmpty == false) ? language! : "en"
+
+      // 2. Strip the 'data:image...' prefix if present
+      let strippedBase64 = base64Image.replacingOccurrences(
+        of: "^data:image/[a-zA-Z]+;base64,",
+        with: "",
+        options: .regularExpression
+      )
+
+      // 3. Decode into Data and convert to CGImage
+      guard
+        let imageData = Data(base64Encoded: strippedBase64),
+        let uiImage = UIImage(data: imageData),
+        let cgImage = uiImage.cgImage
+      else {
+        // If decode fails, return empty or throw
+        self.sendEvent("onChange", ["value": ""])
+        return ""
       }
 
-      Events("onLoad")
+      // 4. Prepare a Vision request (requires iOS 13+)
+      let request = VNRecognizeTextRequest()
+      if #available(iOS 13.0, *) {
+        request.recognitionLevel = .accurate
+      } else {
+        request.recognitionLevel = .fast
+      }
+      request.usesLanguageCorrection = true
+      request.recognitionLanguages = [chosenLanguage]
+
+      // 5. Perform the request (synchronously for simplicity)
+      let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+      do {
+        try handler.perform([request])
+      } catch {
+        self.sendEvent("onChange", ["value": ""])
+        return ""
+      }
+
+      // 6. Gather recognized text
+      guard let observations = request.results as? [VNRecognizedTextObservation] else {
+        self.sendEvent("onChange", ["value": "no text recognized"])
+        return ""
+      }
+
+      let recognizedStrings = observations.compactMap {
+        $0.topCandidates(1).first?.string
+      }
+      let fullText = recognizedStrings.joined(separator: "\n")
+
+      // 7. Send the recognized text back as an event, and return it
+      self.sendEvent("onChange", ["value": fullText])
+      return fullText
     }
   }
 }

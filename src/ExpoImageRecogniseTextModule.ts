@@ -6,6 +6,7 @@ declare class ExpoImageRecogniseTextModule extends NativeModule<ExpoImageRecogni
   PI: number;
   hello(): string;
   setValueAsync(value: string): Promise<void>;
+  recognizeTextFromBase64Async(base64: string): Promise<string>;
 }
 
 // This call loads the native module object from the JSI.
