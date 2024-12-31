@@ -1,6 +1,4 @@
-# Here’s an updated README file for your expo-image-recognise-text package, ready for publishing on npm. The content provides clear instructions, usage examples, and links to your GitHub repository
-
-expo-image-recognise-text
+# expo-image-recognise-text
 
 A React Native library for performing text recognition (OCR) on Base64-encoded images using the Vision framework. This library works seamlessly with Expo projects.
 
