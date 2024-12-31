@@ -26,9 +26,8 @@ npx pod-install
 ## Rebuild the project using Expo’s custom development client
 
 ```bash
-expo prebuild
-expo run:ios
-expo run:android
+  expo prebuild
+  expo run:ios
 ```
 
 ## Important: Add Vision Framework to Your Xcode Project
