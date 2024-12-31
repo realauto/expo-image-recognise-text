@@ -1,6 +1,6 @@
 {
   "name": "expo-image-recognise-text",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "base64 Image to Text with Vision framwork",
   "main": "build/index.js",
   "types": "build/index.d.ts",
