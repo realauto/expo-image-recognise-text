@@ -1,4 +1,4 @@
-Here’s an updated README file for your expo-image-recognise-text package, ready for publishing on npm. The content provides clear instructions, usage examples, and links to your GitHub repository.
+# Here’s an updated README file for your expo-image-recognise-text package, ready for publishing on npm. The content provides clear instructions, usage examples, and links to your GitHub repository
 
 expo-image-recognise-text
 
@@ -31,7 +31,7 @@ npm install expo-image-recognise-text
 npx pod-install
 ```
 
-	3.	Rebuild the project using Expo’s custom development client:
+3.	Rebuild the project using Expo’s custom development client:
 
 ```bash
 expo prebuild
@@ -126,4 +126,3 @@ Repository
 License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-

@@ -19,15 +19,20 @@
     "react-native",
     "expo",
     "expo-image-recognise-text",
-    "ExpoImageRecogniseText"
+    "ExpoImageRecogniseText",
+    "base64Image",
+    "ImageToText",
+    "Vision",
+    "TextRecognition",
+    "OCR"
   ],
-  "repository": "https://github.com/realauto/qubitasia",
+  "repository": "https://github.com/realauto/expo-image-recognise-text",
   "bugs": {
-    "url": "https://github.com/realauto/qubitasia/issues"
+    "url": "https://github.com/realauto/expo-image-recognise-text/issues"
   },
   "author": "realauto <realauto@gmail.com> ()",
   "license": "MIT",
-  "homepage": "https://github.com/realauto/qubitasia#readme",
+  "homepage": "https://github.com/realauto/expo-image-recognise-text#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "~18.3.12",
